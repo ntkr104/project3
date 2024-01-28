@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Currency Converter</title>
+<style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    .form-group {
+      margin-bottom: 10px;
+    }
+    label {
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input, select, button {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #5cb85c;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #4cae4c;
+    }
+    #result {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+  </style>
+<script>
+function convertCurrency() {
+  const amount = parseFloat(document.getElementById('amount').value);
+  const fromCurrency = document.getElementById('fromCurrency').value;
+  const toCurrency = document.getElementById('toCurrency').value;
+  const rates = {
+    USD: { buy: 429, sell: 431 },
+    EUR: { buy: 507, sell: 509 }
+  };
+
+  let result = 0;
+
+  if (fromCurrency === "KZT") {
+    if (toCurrency === "USD") {
+      result = amount / rates.USD.buy;
+    } else if (toCurrency === "EUR") {
+      result = amount / rates.EUR.buy;
+    }
+  } else if (fromCurrency === "USD") {
+    if (toCurrency === "KZT") {
+      result = amount * rates.USD.sell;
+    }
+  } else if (fromCurrency === "EUR") {
+    if (toCurrency === "KZT") {
+      result = amount * rates.EUR.sell;
+    }
+  }
+
+  document.getElementById('result').innerText = `Converted Amount: ${result.toFixed(2)}`;
+  return false; // Prevent form submission
+}
+</script>
+</head>
+<body>
+<h1>Currency Converter</h1>
+<form onsubmit="return convertCurrency()">
+  <div>
+    <label for="amount">Enter amount:</label>
+    <input type="number" id="amount" required>
+  </div>
+  <div>
+    <label for="fromCurrency">From:</label>
+    <select id="fromCurrency">
+      <option value="KZT">Kazakhstan Tenge (KZT)</option>
+      <option value="USD">US Dollar (USD)</option>
+      <option value="EUR">Euro (EUR)</option>
+    </select>
+  </div>
+  <div>
+    <label for="toCurrency">To:</label>
+    <select id="toCurrency">
+      <option value="USD">US Dollar (USD)</option>
+      <option value="EUR">Euro (EUR)</option>
+      <option value="KZT">Kazakhstan Tenge (KZT)</option>
+    </select>
+  </div>
+  <button type="submit">Convert</button>
+</form>
+<div id="result"></div>
+</body>
+</html>
